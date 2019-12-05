@@ -12,15 +12,24 @@ public class Maze : MonoBehaviour {
         Sprite WallSprite;
     [SerializeField]
         Sprite FloorSprite;
+    [SerializeField]
+        GameObject ai;
+    [SerializeField]
+        GameObject treasure;
     Tile WallTile,FloorTile;
     [SerializeField]
         Tile nWall, nwWall, nsWall,wneWall, neswWall;
-    Tilemap WallMap,FloorMap;
+    [SerializeField]
+        GameObject dot;
+    GameObject d;
+    public static Tilemap WallMap,FloorMap;
     [SerializeField]
         bool FullScreen;
     [SerializeField]
         int complexity = 1;     // number of times each cell
                             //  is visited during generation
+    int numEnemies = 4;
+    int numTreasures = 6;
 
     void Start() {
         GameObject player = GameObject.FindWithTag("Player");
@@ -43,10 +52,16 @@ public class Maze : MonoBehaviour {
         if(FullScreen) {
             Destroy(Camera.main.GetComponent<CameraController>());
             Camera.main.transform.position = new Vector3Int(W,H,-10);
-            Camera.main.orthographicSize = (W > H ? W : H);
+            Camera.main.orthographicSize = (W > H ? H : W) + 2;
         }
         pf = new PathFinder();
-        
+        for(int i = 0; i < numEnemies; i++) {
+            GameObject.Instantiate(ai);
+        }
+        for(int i = 0; i < numTreasures; i++) {
+            GameObject g = GameObject.Instantiate(treasure);
+            g.name = "Treasure";
+        }
     }
 
     Vector3 GetSpawnPosition() { 
@@ -63,30 +78,40 @@ public class Maze : MonoBehaviour {
                 }
                 else {
                     FloorMap.SetTile(new Vector3Int(x,y+1,0),FloorTile);
+                    d = GameObject.Instantiate(dot);
+                    d.transform.position = new Vector3Int(x,y+1,0)+new Vector3(0.5f,0.5f,0);
                 }
                 if(mg.grid[i,j].Walls['S'] == true) {
                     WallMap.SetTile(new Vector3Int(x,y-1,0),WallTile);
                 }
                 else {
                     FloorMap.SetTile(new Vector3Int(x,y-1,0),FloorTile);
+                    d = GameObject.Instantiate(dot);
+                    d.transform.position = new Vector3Int(x,y-1,0)+new Vector3(0.5f,0.5f,0);
                 }
                 if(mg.grid[i,j].Walls['E'] == true) {
                     WallMap.SetTile(new Vector3Int(x+1,y,0),WallTile);
                 }
                 else {
                     FloorMap.SetTile(new Vector3Int(x+1,y,0),FloorTile);
+                    d = GameObject.Instantiate(dot);
+                    d.transform.position = new Vector3Int(x+1,y,0)+new Vector3(0.5f,0.5f,0);
                 }
                 if(mg.grid[i,j].Walls['W'] == true) {
                     WallMap.SetTile(new Vector3Int(x-1,y,0),WallTile);
                 }
                 else {
                     FloorMap.SetTile(new Vector3Int(x-1,y,0),FloorTile);
+                    d = GameObject.Instantiate(dot);
+                    d.transform.position = new Vector3Int(x-1,y,0)+new Vector3(0.5f,0.5f,0);
                 }
                 WallMap.SetTile(new Vector3Int(x+1,y+1,0),WallTile);
                 WallMap.SetTile(new Vector3Int(x-1,y-1,0),WallTile);
                 WallMap.SetTile(new Vector3Int(x-1,y+1,0),WallTile);
                 WallMap.SetTile(new Vector3Int(x+1,y-1,0),WallTile);
                 FloorMap.SetTile(new Vector3Int(x,y,0),FloorTile);
+                d = GameObject.Instantiate(dot);
+                d.transform.position = new Vector3Int(x,y,0)+new Vector3(0.5f,0.5f,0);
             }
         }
     }

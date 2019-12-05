@@ -21,24 +21,24 @@ public class PlayerController : MonoBehaviour {
         //int y = 0;
         /* only moves if current position is integer; moves along grid. */ 
         if(Input.GetKey(KeyCode.W) && transform.position == position) {
-            if(Physics2D.OverlapBox(position + Vector3.up,new Vector2(1,1),0) == null) {
+            if(Maze.WallMap.GetTile(Vector3Int.FloorToInt(position+Vector3.up)) == null) {
                 position += Vector3.up;
             }
         }
         else if(Input.GetKey(KeyCode.S) && transform.position == position) {
-            if(Physics2D.OverlapBox(position - Vector3.up,new Vector2(1,1),0) == null) {
+            if(Maze.WallMap.GetTile(Vector3Int.FloorToInt(position-Vector3.up)) == null) {
                 position -= Vector3.up;
             }
             //y = -1;
         }
         if(Input.GetKey(KeyCode.A) && transform.position == position) {
-            if(Physics2D.OverlapBox(position - Vector3.right,new Vector2(1,1),0) == null) {
+            if(Maze.WallMap.GetTile(Vector3Int.FloorToInt(position-Vector3.right)) == null) {
                 position -= Vector3.right;
             }
             //x = -1;
         }
         else if(Input.GetKey(KeyCode.D) && transform.position == position) {
-            if(Physics2D.OverlapBox(position + Vector3.right,new Vector2(1,1),0) == null) {
+            if(Maze.WallMap.GetTile(Vector3Int.FloorToInt(position+Vector3.right)) == null) {
                 position += Vector3.right;
             }
             //x = 1;

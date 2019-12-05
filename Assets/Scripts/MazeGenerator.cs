@@ -44,8 +44,9 @@ public class MazeGenerator {
 
     public void BuildMaze(int x, int y) {
         grid[x,y].Visit();
+        int dir = UnityEngine.Random.Range(0,3);
         while(UnvisitedNeighbors(x,y) > 0) {
-            foreach(int dir in Enumerable.Range(0,4).OrderBy(k => rand.Next())) {
+            //foreach(int dir in Enumerable.Range(0,4).OrderBy(k => rand.Next())) {
                 switch(dir%4) {
                     case 0:     // north
                         if(y < H-1 && grid[x,y+1].visited < maxVisits) {
@@ -82,7 +83,8 @@ public class MazeGenerator {
                     default:
                         break;
                 }
-            }
+            //}
+            dir++;
 
         }
     }

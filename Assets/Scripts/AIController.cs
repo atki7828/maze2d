@@ -12,20 +12,32 @@ public class AIController : MonoBehaviour {
     Vector3 position;
 
     void Start() {
+        mg = MazeGenerator.GetInstance();
+        this.transform.position = mg.GetSpawnPosition();
         pf = new PathFinder();
         Player = GameObject.FindWithTag("Player");
-        mg = MazeGenerator.GetInstance();
         line = this.GetComponent<LineRenderer>();
-        this.transform.position = mg.GetSpawnPosition();
         position = this.transform.position;
-        //line.startColor = line.endColor = new Color(0,0,0,0);   // transparent.
+        line.startColor = line.endColor = new Color(0,0,0,0);   // transparent.
     }
 
     void Update() {
         playerPos = new Vector3Int((int)Player.transform.position.x/2,(int)Player.transform.position.y/2,0);
         aiPos = new Vector3Int((int)this.transform.position.x/2,(int)this.transform.position.y/2,0);
 
-        path = pf.GetPath(playerPos,aiPos);
+        Vector3 dir = (Player.transform.position - transform.position).normalized;
+
+        //Debug.DrawRay(transform.position+dir,dir,Color.green,1.0f);
+        //if(Physics2D.Raycast(transform.position+dir,dir).collider.gameObject == Player) {
+            //Debug.Log(Physics2D.Raycast(transform.position+dir,dir).collider.gameObject);
+            path = pf.GetPath(playerPos,aiPos);
+        //}
+        /*
+        else {
+            Vector3 target = mg.GetSpawnPosition();
+            path = pf.GetPath(new Vector3Int((int)target.x/2,(int)target.y/2,0),aiPos);
+        }
+        */
         line.positionCount = 0;
         int i = 0;
         Node p = path;
@@ -35,7 +47,7 @@ public class AIController : MonoBehaviour {
             i++;
             p = p.parent;
         }
-        if(transform.position == position && line.positionCount > 0) {
+        if(transform.position == position && line.positionCount > 1) {
             position = line.GetPosition(1);
             RemovePoint();
         }
@@ -47,9 +59,10 @@ public class AIController : MonoBehaviour {
     void RemovePoint() {
         Vector3[] positions = new Vector3[line.positionCount];
         line.GetPositions(positions);
-        for(int i = 0; i < line.positionCount-1; i++) {
+        line.positionCount--;
+        line.SetPositions(positions);
+        for(int i = 0; i < line.positionCount; i++) {
             line.SetPosition(i,positions[i+1]);
         }
-        line.positionCount--;
     }
 }
