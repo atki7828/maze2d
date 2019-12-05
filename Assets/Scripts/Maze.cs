@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Maze : MonoBehaviour {
+    PathFinder pf;
     static MazeGenerator mg;
     [SerializeField]
         int W = 12;
@@ -12,6 +13,8 @@ public class Maze : MonoBehaviour {
     [SerializeField]
         Sprite FloorSprite;
     Tile WallTile,FloorTile;
+    [SerializeField]
+        Tile nWall, nwWall, nsWall,wneWall, neswWall;
     Tilemap WallMap,FloorMap;
     [SerializeField]
         bool FullScreen;
@@ -28,7 +31,8 @@ public class Maze : MonoBehaviour {
         FloorTile = Tile.CreateInstance<Tile>();
         FloorTile.sprite = FloorSprite;
 
-        mg = new MazeGenerator(W,H);
+        if(mg == null)  mg = MazeGenerator.GetInstance();
+        mg.init(W,H);
         mg.maxVisits = complexity;
         mg.BuildMaze(Random.Range(1,W-1),Random.Range(1,H-1));
         DrawMaze();
@@ -41,6 +45,8 @@ public class Maze : MonoBehaviour {
             Camera.main.transform.position = new Vector3Int(W,H,-10);
             Camera.main.orthographicSize = (W > H ? W : H);
         }
+        pf = new PathFinder();
+        
     }
 
     Vector3 GetSpawnPosition() { 
@@ -84,6 +90,42 @@ public class Maze : MonoBehaviour {
             }
         }
     }
+    /*
+
+    void DrawMaze() {
+        for(int i = 0; i < W; i++) {
+            for(int j = 0; j < H; j++) {
+                int numWalls = 0;
+                Tile t;
+                if(mg.grid[i,j].Walls['N'] == true) {
+                    numWalls++;
+                }
+                if(mg.grid[i,j].Walls['E'] == true) {
+                    numWalls++;
+                }
+                if(mg.grid[i,j].Walls['S'] == true) {
+                    numWalls++;
+                }
+                if(mg.grid[i,j].Walls['W'] == true) {
+                    numWalls++;
+                }
+Debug.Log(numWalls);
+                if(numWalls == 1) {
+                    WallMap.SetTile(new Vector3Int(i,j,0),nWall);
+                }
+                else if(numWalls == 2) {
+                }
+                else if(numWalls == 3) {
+                    WallMap.SetTile(new Vector3Int(i,j,0),wneWall);
+                }
+                else if(numWalls == 4) {
+                    WallMap.SetTile(new Vector3Int(i,j,0),neswWall);
+                }
+            }
+        }
+        WallMap.SetTile(new Vector3Int(0,0,0),neswWall);
+    }
+    */
 
     public static Cell GetCell(int x, int y) { return mg.grid[x,y]; }
 }
