@@ -18,8 +18,6 @@ public class Maze : MonoBehaviour {
         GameObject treasure;
     Tile WallTile,FloorTile;
     [SerializeField]
-        Tile nWall, nwWall, nsWall,wneWall, neswWall;
-    [SerializeField]
         GameObject dot;
     GameObject d;
     public static Tilemap WallMap,FloorMap;

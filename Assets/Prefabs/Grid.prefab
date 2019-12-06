@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb427d70ae5ec9b1888e18d46830247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  W: 8
+  W: 12
   H: 8
   WallSprite: {fileID: 21300000, guid: 0ef1d9735665d7849afdc68d3ce045b2, type: 3}
   FloorSprite: {fileID: 21300000, guid: 1018d7dd131099411bc88404060b419b, type: 3}
@@ -200,7 +200,7 @@ MonoBehaviour:
   wneWall: {fileID: 11400000, guid: 3711d3839217bd1f5a03d4ed9b4fbaf5, type: 2}
   neswWall: {fileID: 11400000, guid: 5930a3905907b9415a48a8ec9ee059ff, type: 2}
   dot: {fileID: 1723408693643379582, guid: 275548d59f3df5c27b0c7e8053811fdc, type: 3}
-  FullScreen: 0
+  FullScreen: 1
   complexity: 3
 --- !u!1 &7603388858979796192
 GameObject:
