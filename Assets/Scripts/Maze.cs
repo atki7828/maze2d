@@ -1,8 +1,10 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
 public class Maze : MonoBehaviour {
     PathFinder pf;
+    public static List<GameObject> aiList;
     static MazeGenerator mg;
     [SerializeField]
         int W = 12;
@@ -26,7 +28,7 @@ public class Maze : MonoBehaviour {
     [SerializeField]
         int complexity = 1;     // number of times each cell
                             //  is visited during generation
-    int numEnemies = 4;
+    int numEnemies = 2;
     int numTreasures = 6;
 
     void Start() {
@@ -53,8 +55,12 @@ public class Maze : MonoBehaviour {
             Camera.main.orthographicSize = (W > H ? H : W) + 2;
         }
         pf = new PathFinder();
+        aiList = new List<GameObject>();
         for(int i = 0; i < numEnemies; i++) {
-            GameObject.Instantiate(ai);
+            GameObject e = GameObject.Instantiate(ai);
+            e.transform.position = mg.GetSpawnPosition();
+            aiList.Add(e);
+            e.name = "AI";
         }
         for(int i = 0; i < numTreasures; i++) {
             GameObject g = GameObject.Instantiate(treasure);
@@ -67,6 +73,7 @@ public class Maze : MonoBehaviour {
     }
 
     void DrawMaze() {
+        GameObject dots = new GameObject("dots");
         for(int i = 0; i < W; i++) { 
             for(int j = 0; j < H; j++) {
                 int x = i*2;
@@ -78,6 +85,7 @@ public class Maze : MonoBehaviour {
                     FloorMap.SetTile(new Vector3Int(x,y+1,0),FloorTile);
                     d = GameObject.Instantiate(dot);
                     d.transform.position = new Vector3Int(x,y+1,0)+new Vector3(0.5f,0.5f,0);
+                    d.transform.parent = dots.transform;
                 }
                 if(mg.grid[i,j].Walls['S'] == true) {
                     WallMap.SetTile(new Vector3Int(x,y-1,0),WallTile);
@@ -86,6 +94,7 @@ public class Maze : MonoBehaviour {
                     FloorMap.SetTile(new Vector3Int(x,y-1,0),FloorTile);
                     d = GameObject.Instantiate(dot);
                     d.transform.position = new Vector3Int(x,y-1,0)+new Vector3(0.5f,0.5f,0);
+                    d.transform.parent = dots.transform;
                 }
                 if(mg.grid[i,j].Walls['E'] == true) {
                     WallMap.SetTile(new Vector3Int(x+1,y,0),WallTile);
@@ -94,6 +103,7 @@ public class Maze : MonoBehaviour {
                     FloorMap.SetTile(new Vector3Int(x+1,y,0),FloorTile);
                     d = GameObject.Instantiate(dot);
                     d.transform.position = new Vector3Int(x+1,y,0)+new Vector3(0.5f,0.5f,0);
+                    d.transform.parent = dots.transform;
                 }
                 if(mg.grid[i,j].Walls['W'] == true) {
                     WallMap.SetTile(new Vector3Int(x-1,y,0),WallTile);
@@ -102,6 +112,7 @@ public class Maze : MonoBehaviour {
                     FloorMap.SetTile(new Vector3Int(x-1,y,0),FloorTile);
                     d = GameObject.Instantiate(dot);
                     d.transform.position = new Vector3Int(x-1,y,0)+new Vector3(0.5f,0.5f,0);
+                    d.transform.parent = dots.transform;
                 }
                 WallMap.SetTile(new Vector3Int(x+1,y+1,0),WallTile);
                 WallMap.SetTile(new Vector3Int(x-1,y-1,0),WallTile);
@@ -110,6 +121,7 @@ public class Maze : MonoBehaviour {
                 FloorMap.SetTile(new Vector3Int(x,y,0),FloorTile);
                 d = GameObject.Instantiate(dot);
                 d.transform.position = new Vector3Int(x,y,0)+new Vector3(0.5f,0.5f,0);
+                d.transform.parent = dots.transform;
             }
         }
     }
@@ -132,7 +144,6 @@ public class Maze : MonoBehaviour {
                 if(mg.grid[i,j].Walls['W'] == true) {
                     numWalls++;
                 }
-Debug.Log(numWalls);
                 if(numWalls == 1) {
                     WallMap.SetTile(new Vector3Int(i,j,0),nWall);
                 }

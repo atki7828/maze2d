@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Linq;
 using System;
 
@@ -52,5 +53,11 @@ public class PlayerController : MonoBehaviour {
         //rb.MovePosition(pos);
 
 
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        if(other.gameObject.name == "AI") {
+            SceneManager.LoadScene("startmenu");
+        }
     }
 }
