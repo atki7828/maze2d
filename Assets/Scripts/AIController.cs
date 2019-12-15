@@ -20,6 +20,7 @@ public class AIController : MonoBehaviour {
         pf.self = this.gameObject;
         Player = GameObject.FindWithTag("Player");
         line = this.GetComponent<LineRenderer>();
+        line.startWidth = line.endWidth = 0.1f;
         position = this.transform.position;
         home = Vector3Int.FloorToInt(position);
         //line.startColor = line.endColor = new Color(0,0,0,0);   // transparent.

@@ -125,7 +125,7 @@ TilemapCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -188,20 +188,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   W: 12
-  H: 8
+  H: 12
   WallSprite: {fileID: 21300000, guid: 0ef1d9735665d7849afdc68d3ce045b2, type: 3}
   FloorSprite: {fileID: 21300000, guid: 1018d7dd131099411bc88404060b419b, type: 3}
   ai: {fileID: 7576781394833265574, guid: d69c6b9e4a4f8fef7823c1f36fd0e302, type: 3}
   treasure: {fileID: 2304808888548094531, guid: d3ed609f6b6ff63a09e7c252eeaa4a10,
     type: 3}
-  nWall: {fileID: 11400000, guid: db04ea265dd6f7d56a39e4d96cf77622, type: 2}
-  nwWall: {fileID: 11400000, guid: 6b3027e3c14508597b50807904ba3961, type: 2}
-  nsWall: {fileID: 11400000, guid: ce2fbd91190ab516285873cfc599b60b, type: 2}
-  wneWall: {fileID: 11400000, guid: 3711d3839217bd1f5a03d4ed9b4fbaf5, type: 2}
-  neswWall: {fileID: 11400000, guid: 5930a3905907b9415a48a8ec9ee059ff, type: 2}
+  FloorTile: {fileID: 11400000, guid: c719db1870e3b57938b0b552124ae38c, type: 2}
+  WallTile: {fileID: 11400000, guid: c719db1870e3b57938b0b552124ae38c, type: 2}
+  nWall: {fileID: 11400000, guid: e06e9629abe7b5af8aeb7dd65b36f01c, type: 2}
+  nwWall: {fileID: 11400000, guid: 6f692741d39c8e93dbd0afff98ef9c46, type: 2}
+  nsWall: {fileID: 11400000, guid: c719db1870e3b57938b0b552124ae38c, type: 2}
+  nwsWall: {fileID: 11400000, guid: 75c52a91908e5d2a3ab9d5c1951508d9, type: 2}
+  nwseWall: {fileID: 11400000, guid: 61a52ca0decad3660988da864de696ad, type: 2}
   dot: {fileID: 1723408693643379582, guid: 275548d59f3df5c27b0c7e8053811fdc, type: 3}
   FullScreen: 1
-  complexity: 3
+  complexity: 1
 --- !u!1 &7603388858979796192
 GameObject:
   m_ObjectHideFlags: 0

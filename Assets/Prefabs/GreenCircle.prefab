@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3022565515264064441}
   - component: {fileID: 3248648872114108851}
   - component: {fileID: 5905097283904167046}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GreenCircle
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
+  prevPosition: {x: 0, y: 0, z: 0}
 --- !u!198 &3248648872114108851
 ParticleSystem:
   m_ObjectHideFlags: 0

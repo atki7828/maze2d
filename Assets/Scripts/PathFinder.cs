@@ -25,49 +25,20 @@ public class PathFinder {
     }
 
     void init() {
-        int w = mg.W*2;
-        int h = mg.H*2;
+        int w = mg.W;
+        int h = mg.H;
         nodes = new Node[w,h];
         for(int i = 0; i < w; i++) {
             for(int j = 0; j < h; j++) {
-                if(maze.GetTile(new Vector3Int(i,j,0)) != null) {
-                    nodes[i,j] = new Node(i,j);
-                }
-                else {
-                    nodes[i,j] = null;
-                }
+                nodes[i,j] = new Node(i,j);
             }
         }
         foreach(Node n in nodes) {
-            if(n != null) {
-                n.neighbors = new List<Node>();
-                for(int i = n.x-1; i <= n.x+1; i++) {
-                    for(int j = n.y-1; j <= n.y+1; j++) {
-                        if(i >= 0 && j >= 0 && i < w && j < h && (i != n.x || j != n.y) && (i == n.x || j == n.y)) {
-                            if(nodes[i,j] != null) {
-                                n.neighbors.Add(nodes[i,j]);
-                            }
-                        }
-                    }
-                }
+            n.neighbors = new List<Node>();
+            foreach(Cell c in grid[n.x,n.y].neighbors) {
+                n.neighbors.Add(nodes[c.x,c.y]);
             }
         }
-        /*
-           nodes = new Node[mg.W,mg.H];
-           for(int i = 0; i < mg.W; i++) {
-           for(int j = 0; j < mg.H; j++) {
-           nodes[i,j] = new Node(i,j);
-           }
-           }
-           for(int i = 0; i < mg.W; i++) {
-           for(int j = 0; j < mg.H; j++) {
-           nodes[i,j].neighbors = new List<Node>();
-           foreach(Cell c in mg.grid[i,j].neighbors) {
-           nodes[i,j].neighbors.Add(nodes[c.x,c.y]);
-           }
-           }
-           }
-           */
     }
 
     public Node GetPath(Vector3Int Start, Vector3Int End) {

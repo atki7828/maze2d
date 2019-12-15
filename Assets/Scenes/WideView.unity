@@ -251,22 +251,17 @@ PrefabInstance:
     - target: {fileID: 6840641125310954890, guid: 4e3143d89de4aac1d9043136346f99e3,
         type: 3}
       propertyPath: complexity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6840641125310954890, guid: 4e3143d89de4aac1d9043136346f99e3,
-        type: 3}
-      propertyPath: FullScreen
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6840641125310954890, guid: 4e3143d89de4aac1d9043136346f99e3,
         type: 3}
       propertyPath: W
-      value: 9
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6840641125310954890, guid: 4e3143d89de4aac1d9043136346f99e3,
         type: 3}
       propertyPath: H
-      value: 9
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e3143d89de4aac1d9043136346f99e3, type: 3}

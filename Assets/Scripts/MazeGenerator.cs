@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using System;
 using System.Linq;
 using System.Collections;
@@ -38,7 +39,7 @@ public class MazeGenerator {
     }
 
     public Vector3 GetSpawnPosition() {
-        return new Vector3(UnityEngine.Random.Range(1,W-1)*2,UnityEngine.Random.Range(1,H-1)*2,0) + new Vector3(0.5f,0.5f,0);
+        return new Vector3(UnityEngine.Random.Range(1,W-1),UnityEngine.Random.Range(1,H-1),0) + new Vector3(0.5f,0.5f,0);
     }
 
     public void BuildMaze(int x, int y) {
@@ -113,6 +114,7 @@ public class Cell {
     public int visited;
     public Dictionary<char,bool> Walls;
     public List<Cell> neighbors;
+    public Tile tile;
 
     public Cell(int x, int y) {
         this.x = x;
