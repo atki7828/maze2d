@@ -1,13 +1,13 @@
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
 public class MazeGenerator {
-    public int W;
-    public int H;
+    int W;
+    int H;
+    public Vector2Int GetSize() { return new Vector2Int(this.W,this.H); }
     public Cell[,] grid;
     public int maxVisits = 1;
     static MazeGenerator mg;
@@ -29,6 +29,7 @@ public class MazeGenerator {
         for(int i = 0; i < W; i++) {
             for(int j = 0; j < H; j++) {
                 grid[i,j] = new Cell(i,j);
+                //grid[i,j].visited = UnityEngine.Random.Range(0,maxVisits);
             }
         }
     }
@@ -39,7 +40,7 @@ public class MazeGenerator {
     }
 
     public Vector3 GetSpawnPosition() {
-        return new Vector3(UnityEngine.Random.Range(1,W-1),UnityEngine.Random.Range(1,H-1),0) + new Vector3(0.5f,0.5f,0);
+        return new Vector3(UnityEngine.Random.Range(1,W-1),UnityEngine.Random.Range(1,H-1),0); 
     }
 
     public void BuildMaze(int x, int y) {
@@ -52,6 +53,7 @@ public class MazeGenerator {
                     if(dir == 0) {     // north
                         if(y < H-1 && grid[x,y+1].visited < maxVisits) {
                             grid[x,y].neighbors.Add(grid[x,y+1]);
+                            grid[x,y+1].neighbors.Add(grid[x,y]);
                             grid[x,y].Walls['N'] = false;
                             grid[x,y+1].Walls['S'] = false;
                             BuildMaze(x,y+1);
@@ -60,6 +62,7 @@ public class MazeGenerator {
                     else if(dir == 1) {
                         if(y > 0 && grid[x,y-1].visited < maxVisits) {
                             grid[x,y].neighbors.Add(grid[x,y-1]);
+                            grid[x,y-1].neighbors.Add(grid[x,y]);
                             grid[x,y].Walls['S'] = false;
                             grid[x,y-1].Walls['N'] = false;
                             BuildMaze(x,y-1);
@@ -68,6 +71,7 @@ public class MazeGenerator {
                     else if(dir == 2) {
                         if(x > 0 && grid[x-1,y].visited < maxVisits) {
                             grid[x,y].neighbors.Add(grid[x-1,y]);
+                            grid[x-1,y].neighbors.Add(grid[x,y]);
                             grid[x,y].Walls['W'] = false;
                             grid[x-1,y].Walls['E'] = false;
                             BuildMaze(x-1,y);
@@ -76,6 +80,7 @@ public class MazeGenerator {
                     else if(dir == 3) {
                         if(x < W-1 && grid[x+1,y].visited < maxVisits) {
                             grid[x,y].neighbors.Add(grid[x+1,y]);
+                            grid[x+1,y].neighbors.Add(grid[x,y]);
                             grid[x,y].Walls['E'] = false;
                             grid[x+1,y].Walls['W'] = false;
                             BuildMaze(x+1,y);
@@ -114,7 +119,6 @@ public class Cell {
     public int visited;
     public Dictionary<char,bool> Walls;
     public List<Cell> neighbors;
-    public Tile tile;
 
     public Cell(int x, int y) {
         this.x = x;

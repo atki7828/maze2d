@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/WideView.unity
     guid: 19620374c65d205c1b5868cfb6c51464
+  - enabled: 1
+    path: Assets/Scenes/bsp.unity
+    guid: 298fd985e1f9a0068b61e16ab8dec892
   m_configObjects: {}

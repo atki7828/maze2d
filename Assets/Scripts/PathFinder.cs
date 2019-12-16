@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.IO;
-using UnityEngine.Tilemaps;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,15 +7,14 @@ using System.Collections.Generic;
 public class PathFinder {
 
     Cell[,] grid;
-    Tilemap maze;
     Node[,] nodes;
     static MazeGenerator mg;
     Node current;
     HashSet<Node> OpenSet, ClosedSet;
     public GameObject self;
+    Vector2Int size;
 
     public PathFinder() {
-        maze = Maze.FloorMap;
         mg = MazeGenerator.GetInstance();
         grid = mg.grid;
         //init();
@@ -25,8 +23,9 @@ public class PathFinder {
     }
 
     void init() {
-        int w = mg.W;
-        int h = mg.H;
+        size = mg.GetSize();
+        int w = size.x;
+        int h = size.y;
         nodes = new Node[w,h];
         for(int i = 0; i < w; i++) {
             for(int j = 0; j < h; j++) {
@@ -48,7 +47,7 @@ public class PathFinder {
         OpenSet.Clear();
         ClosedSet.Clear();
 
-        if(Start.x < 0 || Start.x > mg.W-1 || Start.y < 0 || Start.y > mg.H-1) {
+        if(Start.x < 0 || Start.x > size.x-1 || Start.y < 0 || Start.y > size.y-1) {
             //return null;
         }
 

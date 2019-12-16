@@ -39,7 +39,7 @@ public class AIController : MonoBehaviour {
         DrawLine();
         if(transform.position == position && path != null) {
             if(path.parent != null)
-                position = new Vector3(path.parent.x,path.parent.y,0) + new Vector3(0.5f,0.5f,0);
+                position = new Vector3(path.parent.x,path.parent.y,0); 
             home = new Vector3Int(path.x,path.y,0);
             path = path.parent;
         }
@@ -78,7 +78,7 @@ public class AIController : MonoBehaviour {
         int i = 0;
         while(p != null) {
             line.positionCount++;
-            line.SetPosition(i++,new Vector3(p.x,p.y,0)+new Vector3(0.5f,0.5f,0));
+            line.SetPosition(i++,new Vector3(p.x,p.y,0));
             p = p.parent;
         }
     }
