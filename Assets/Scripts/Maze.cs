@@ -21,16 +21,22 @@ public class Maze : MonoBehaviour {
     [SerializeField]
         bool FullScreen;
     [SerializeField]
+        GameObject bg;
+    [SerializeField]
         int complexity = 1;     // number of times each cell
-    int numEnemies = 2;
+    int numEnemies = 0;
     int numTreasures = 6;
+    GameObject player;
 
-    void Start() {
-        GameObject player = GameObject.FindWithTag("Player");
-
+    void Awake() {
+        player = GameObject.FindWithTag("Player");
         if(mg == null)  mg = MazeGenerator.GetInstance();
         mg.init(W,H);
         mg.maxVisits = complexity;
+        background.size = new Vector2Int(W,H)+Vector2Int.one;
+    }
+
+    void Start() {
         mg.BuildMaze(Random.Range(1,W-1),Random.Range(1,H-1));
         DrawMaze();
 
@@ -40,7 +46,10 @@ public class Maze : MonoBehaviour {
         if(FullScreen) {
             Destroy(Camera.main.GetComponent<CameraController>());
             Camera.main.transform.position = new Vector3Int(W/2,H/2,-10);
-            Camera.main.orthographicSize = (W > H ? H : W) / 2 + 1;
+            Camera.main.orthographicSize = (W > H ? H : W) / 2f + 1;
+        }
+        else {
+            Camera.main.orthographicSize = (W > H ? H : W) / 5f + 1;
         }
         pf = new PathFinder();
         aiList = new List<GameObject>();
